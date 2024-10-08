@@ -1,0 +1,166 @@
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+
+        'use strict';
+
+        childBlocks.init();
+        configDetail.init();
+
+    });
+}());
+
+
+const childBlocks = {
+
+    init: () => {
+        childBlocks.nthClickHandler();
+    },
+
+    nthClickHandler: () => {
+
+        let button = conf.qS('.config-container button'),
+            input  = conf.qS('.config-container input');
+
+        button.onclick = () => {
+
+            if(input.value !== ''){
+                childBlocks.nthConfiguration(input.value);
+            }else{
+                alert('Please enter a valid property, for example: 5n+1');
+            }
+
+        }
+    },
+
+    nthConfiguration: (config) => {
+
+        let itemSelectedNodeList  = conf.qSA('[data-item]:nth-child(' + config + ')'),
+            itemNodeList          = conf.qSA('[data-item]');
+
+        // delete all active states
+        itemNodeList.forEach((item) => {
+            let itemInner = conf.CqS(item, '.nth-child-block');
+            itemInner.classList.remove('active');
+            itemInner.innerText = 'Item';
+        });
+
+        // add active states to all nth-childs
+        itemSelectedNodeList.forEach((item) => {
+            let itemInner = conf.CqS(item, '.nth-child-block');
+            itemInner.classList.add('active');
+            itemInner.innerText = config;
+        });
+    },
+};
+
+
+const configDetail = {
+
+    init: () => {
+        configDetail.configDetailClickHandler();
+    },
+
+
+    configDetailClickHandler: () => {
+
+        let button = conf.qS('.config-tool > a');
+
+        button.onclick = (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            conf.qS('.config-tool .config-detail-container').classList.toggle('active');
+            button.classList.toggle('active');
+
+            configDetail.configToolConfig();
+        }
+    },
+
+    configToolConfig: () => {
+
+        let itemInput     = conf.qS('.config-tool .config-detail-container input'),
+            columnSelect  = conf.qS('.config-tool .config-detail-container select'),
+            toolButton    = conf.qS('.config-tool .config-detail-container button');
+
+        toolButton.onclick = () => {
+
+            conf.qS('.config-tool .config-detail-container').classList.remove('active');
+            conf.qS('.config-tool > a').classList.remove('active');
+            changeDOMElements(itemInput, columnSelect);
+        };
+
+        function changeDOMElements(input, select){
+            let itemNodeList = conf.qSA('[data-item]');
+
+            itemNodeList.forEach((item) => {
+                item.className = '';
+                item.classList.add('col-xs-12');
+                item.classList.add('col-sm-' + getColumnValue(select.options[select.selectedIndex].value));
+            });
+
+            if(input.value !== ''){
+                if(parseInt(input.value, 10) > itemNodeList.length){
+                    let items = (parseInt(input.value, 10) - itemNodeList.length);
+                    for(let i = 0; i < items; i++){
+                        console.log(i);
+                        createNewElement(select);
+                    }
+                    refreshNTHChild();
+                }else{
+                    for(let i = 0; i < itemNodeList.length; i++){
+                        let items = itemNodeList.length - parseInt(input.value, 10);
+                        if(i < items){
+                            itemNodeList[i].remove();
+                        }
+                    }
+                    refreshNTHChild();
+                }
+            }
+        };
+
+        function createNewElement(select){
+            let col    = document.createElement('div'),
+                block  = document.createElement('div');
+            console.log('asda')
+            col.classList.add('col-xs-12');
+            col.classList.add('col-sm-' + getColumnValue(select.options[select.selectedIndex].value));
+            col.setAttribute('data-item', '');
+            block.classList.add('nth-child-block');
+            block.innerText = 'Item';
+            col.appendChild(block);
+            conf.qS('[data-item-container]').appendChild(col);
+        };
+
+        function getColumnValue(inputValue){
+            if(inputValue === '1'){
+                return '12';
+            }else if(inputValue === '2'){
+                return '6';
+            }else if(inputValue === '3'){
+                return '4';
+            }else if(inputValue === '4'){
+                return '3';
+            }else{
+                return '4';
+            }
+        };
+
+        function refreshNTHChild(){
+            let inputConfig  = conf.qS('.config-container input');
+            if(inputConfig.value !== ''){
+                childBlocks.nthConfiguration(inputConfig.value);
+            }
+        }
+    },
+};
+
+const conf = {
+    qS: (selector) => {
+        return document.querySelector(selector);
+    },
+    qSA: (selector) => {
+        return document.querySelectorAll(selector);
+    },
+    CqS: (container, selector) => {
+        return container.querySelector(selector);
+    },
+};

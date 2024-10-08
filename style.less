@@ -1,0 +1,271 @@
+@base__color-1: #000;
+@base__color-2: #FFF;
+@base__color-3: #2176FF;
+@base__color-4: #001C49;
+@base__color-5: #E8F1FF;
+
+@bg-color: @base__color-5;
+@item__bg-color: fade(@base__color-3, 10%);
+@item__text-color: @base__color-3;
+@item__bg-color__active: @base__color-3;
+@item__text-color__active: @base__color-2;
+
+@layout__max-width: 1024px;
+
+section.section-container{
+  padding: 100px 0;
+};
+
+
+.content-block{
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h1{
+    text-align: center;
+    width: 100%;
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: 600;
+    margin-bottom: 35px;
+    color: @base__color-4;
+    span{
+      color: @base__color-2;
+      background-color: @base__color-3;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+  }
+  p{
+    color: @base__color-4;
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+    line-height: 24px;
+    span{
+      color: @base__color-2;
+      background-color: @base__color-3;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin: 0 3px;
+    }
+    a{
+      .transition();
+      color: @base__color-3;
+      &:hover{
+        color: fade(@base__color-3, 80%);
+      }
+    }
+  }
+}
+
+.config-container{
+  margin-bottom: 65px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  input{
+    font-family: 'Source Sans Pro', sans-serif;
+    border: 0 none;
+    padding: 0 12px;
+    height: 30px;
+    border-radius: 3px;
+    color: @base__color-3;
+    font-size: 14px;
+    line-height: 16px;
+    &::placeholder{
+      color: @base__color-3;
+    }
+    &:focus{
+      outline: 1px dashed @base__color-3;
+    }
+  }
+  button{
+    font-size: 14px;
+    line-height: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    border: 0 none;
+    padding: 0 12px;
+    height: 30px;
+    border-radius: 3px;
+    background-color: @base__color-4;
+    color: @base__color-2;
+    margin-left: 5px;
+    cursor: pointer;
+    .transition();
+    &:hover{
+      .translate(0,-2px);
+    }
+    &:focus{
+      outline: 1px dashed @base__color-3;
+    }
+  }
+}
+
+.config-tool{
+  position: relative;
+  margin-left: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  > a{
+    width: 40px;
+    height: 40px;
+    background-color: @base__color-3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 90px;
+    .transition();
+    svg path{
+      .transition();
+    }
+    &:hover{
+      .translate(0,-2px);
+      svg path{
+        fill: @base__color-2;
+      }
+    }
+    &.active{
+      svg path{
+        fill: @base__color-2;
+      }
+    }
+    &:focus{
+      outline: 1px dashed @base__color-3;
+    }
+  }
+  .config-detail-container{
+    display: none;
+    &.active{ display: flex; }
+    flex-direction: column;
+    width: 250px;
+    padding: 15px;
+    background: @base__color-2;
+    border-radius: 3px;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    input, select{
+      font-family: 'Source Sans Pro', sans-serif;
+      border: 0 none;
+      padding: 0 12px;
+      height: 30px;
+      border-radius: 3px;
+      color: @base__color-3;
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 12px;
+      &::placeholder{
+        color: @base__color-3;
+      }
+      &:focus{
+        outline: 1px dashed @base__color-3;
+      }
+    }
+    button{
+      font-size: 14px;
+      line-height: 16px;
+      font-family: 'Source Sans Pro', sans-serif;
+      border: 0 none;
+      padding: 0 12px;
+      height: 30px;
+      border-radius: 3px;
+      background-color: @base__color-4;
+      color: @base__color-2;
+      cursor: pointer;
+      .transition();
+      &:hover{
+        .translate(0,-2px);
+      }
+      &:focus{
+        outline: 1px dashed @base__color-3;
+      }
+    }
+  }
+}
+
+.nth-child-block{
+  margin: 0 auto 15px;
+  padding: 11px 14px;
+  border-radius: 4px;
+  background-color: @item__bg-color;
+  color: @item__text-color;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  .transition();
+  &.active{ background-color: @item__bg-color__active; color: @item__text-color__active; }
+}
+
+
+*{
+  box-sizing: border-box;
+}
+html{
+  width: 100%;
+  height: 100%;
+  background-color: @bg-color;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+body{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.main-content {
+  max-width: @layout__max-width;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 15px;
+}
+
+
+.transition(@attribute: all, @duration: .25s) {
+  -webkit-transition: @attribute @duration ease;
+  -moz-transition: @attribute @duration ease;
+  -o-transition: @attribute @duration ease;
+  transition: @attribute @duration ease;
+}
+.transition-delay(@delay) {
+  -webkit-transition-delay: @delay;
+  -moz-transition-delay: @delay;
+  -ms-transition-delay: @delay;
+  -o-transition-delay: @delay;
+  transition-delay: @delay;
+}
+.translate(@transX,@transY) {
+  -webkit-transform: translate(@transX, @transY);
+  -moz-transform: translate(@transX, @transY);
+  -o-transform: translate(@transX, @transY);
+  -ms-transform: translate(@transX, @transY);
+  transform: translate(@transX, @transY);
+}
+.rotate(@deg) {
+  -moz-transform: rotate(@deg);
+  -ms-transform: rotate(@deg);
+  -o-transform: rotate(@deg);
+  -webkit-transform: rotate(@deg);
+  transform: rotate(@deg);
+}
+.translate_rotate(@transX,@transY,@rotate) {
+  -webkit-transform: translate(@transX, @transY) rotate(@rotate);
+  -moz-transform: translate(@transX, @transY) rotate(@rotate);
+  -o-transform: translate(@transX, @transY) rotate(@rotate);
+  -ms-transform: translate(@transX, @transY) rotate(@rotate);
+  transform: translate(@transX, @transY) rotate(@rotate);
+}
+.shadow(@shadow-attributes){
+  -webkit-box-shadow: @shadow-attributes;
+  -moz-box-shadow: @shadow-attributes;
+  box-shadow: @shadow-attributes;
+}
